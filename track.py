@@ -72,7 +72,6 @@ class Duration:
             seconds = seconds % 60
             
         return f"{hr}:{minutes:02}:{seconds:02}" if hr != 0 else f"{minutes:02}:{seconds:02}"
-        
-            
+    
         
     

@@ -4,8 +4,8 @@ class Playlist:
     def __init__(self):
         self.__p_title = None
         self.__total_duration = None
-        self.__playlist_list = [] #lists of playlists
-        self.__tracks = [] #lists of tracks on playlist
+        self.__tracks = [] # key of title and value of tracks
+        self.__playlist = {} #dictionary: key of p_title and value of __tracks
     #getters
     def get_playlist_title(self):
         return self.__p_title
@@ -16,34 +16,40 @@ class Playlist:
     def get_playlist_tracks(self):
         return self.__tracks
     
+    def get_playlist(self):
+        return self.__playlist
+    
     def create_playlist(self, title):
         self.__p_title = title
-        newPlaylist = self.__p_title
+        self.__playlist = {self.__p_title:self.__tracks}
         
-        if self.playlist_title not in self.get_playlist_lists():
-            self.__playlist.append(newPlaylist)
-            return True
-        else:
-            print(f"{newPlaylist} is already on exist")
-            return False
-    
     def add_track_on_playlist(self, track_title:Track):
         #enter the track_title
         #then magsearch sya if the title exist on music library
         #if it exists ma-add, else if 2 exists with the same title, mag-output ang 2 tracks with same title
-        if self.get_playlist_lists():
-            print('Please create a playlist')
-            return False
-        else:
+        playlist = self.__playlist
+        if playlist:
             if track_title not in self.get_playlist_tracks():
-                self.__tracks.append(track_title)
-                print(f'{track_title} is successfully addded to track')
+                playlist[self.get_playlist_title()].append(track_title)
                 return True
             else:
                 print(f"{track_title} is already in the playlist")
                 return False
+        else:
+            print('Please create a playlist')
+            return False
+            
     def display_tracks(self):
-        pass
+        playlist = self.__playlist
+        if playlist:
+            idx = 0
+            for track in playlist[self.get_playlist_title()]:
+                idx += 1
+                print(f"[{idx}] {track}")
+        else:
+            print('please create a playlist')
+            return False
+            
     def test(self):
         if self.get_playlist_lists():
             return True
@@ -51,5 +57,9 @@ class Playlist:
             return False
 
 p = Playlist()
-p.add_track_on_playlist('In the end')
-# print(p.test())
+p.create_playlist('hello')
+p.add_track_on_playlist('mayhem')
+p.add_track_on_playlist('mark')
+p.add_track_on_playlist('moi')
+p.add_track_on_playlist('qwe')
+print(p.display_tracks())
