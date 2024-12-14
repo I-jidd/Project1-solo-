@@ -70,12 +70,8 @@ class Duration:
         if seconds == 60:
             minutes += 1
             seconds = seconds % 60
-        
-        
+            
         return f"{hr}:{minutes:02}:{seconds:02}" if hr != 0 else f"{minutes:02}:{seconds:02}"
-    
-t = Track('Dance, Baby!', 'boy pablo', 'party', 3, 18)
-print(t)
         
             
         
