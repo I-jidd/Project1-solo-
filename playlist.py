@@ -49,17 +49,3 @@ class Playlist:
         else:
             print('please create a playlist')
             return False
-            
-    def test(self):
-        if self.get_playlist_lists():
-            return True
-        else:
-            return False
-
-p = Playlist()
-p.create_playlist('hello')
-p.add_track_on_playlist('mayhem')
-p.add_track_on_playlist('mark')
-p.add_track_on_playlist('moi')
-p.add_track_on_playlist('qwe')
-print(p.display_tracks())
