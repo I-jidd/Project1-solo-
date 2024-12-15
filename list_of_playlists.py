@@ -12,7 +12,16 @@ class List_of_Playlist:
         return self.__playlist
     
     def add_playlist_on_list(self, playlist_title:Playlist):
-        if self.get_playlist_title() not in self.get_list_playlist():
+        if playlist_title not in self.get_list_playlist():
             self.__list_playlist.append(playlist_title)
         else:
             print(f"{playlist_title} is already created")
+    
+    def display_all_playlists(self):
+        if self.get_list_playlist():
+            for playlist in self.get_list_playlist():
+                print(playlist)
+                return True
+        else:
+            print('You have to create a playlist first')
+            return False
