@@ -13,9 +13,16 @@ menu = {
     'play':{
         1:'Play from Music Library',
         2:'Play from Playlist'
+    },
+    'settings': {
+        1:'Pause',
+        2:'Next',
+        3:'Previous',
+        4:'Shuffle',
+        5:'Repeat',
+        6:'Exit'
     }
 }
-queue = Circular_queue()
 
 with open('musicLibrary.json', 'r') as file:
     music_library = json.load(file)
@@ -55,17 +62,25 @@ def play():
             print('\nError. Please enter a valid input\n')
 
 def play_musiclibrary():
+    
+    with open('musicLibrary.json', 'r') as file:
+        music_library = json.load(file)
+
+    TRACKS = music_library['tracks']
+
+    queue = Circular_queue(len(TRACKS))
     for track in TRACKS:
         queue.enqueue(track)
-
-def play_next():
-    queue.dequeue()
-
+    
+    queue.play_queue()
+    
+    display(menu['settings'])
+    choice = int(input('Enter you choice: '))
+    
     
 
 def play_playlist():
     print('playlist')
-        
     
 
     
