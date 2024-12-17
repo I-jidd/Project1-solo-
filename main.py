@@ -72,10 +72,34 @@ def play_musiclibrary():
     for track in TRACKS:
         queue.enqueue(track)
     
-    queue.play_queue()
-    
-    display(menu['settings'])
-    choice = int(input('Enter you choice: '))
+    track = queue.play_queue()
+    queue.queue_status(track)
+    while True:
+        if queue.is_pause():
+            print('[1] Play')
+        print('[1] Pause')
+        print('[2] Next')
+        print('[3] Previous')
+        print('[4] Shuffle')
+        print('[5] Repeat')
+        print('[6] Exit')
+        choice = int(input('Enter you choice: '))
+        if choice == 1:
+            queue.enable_pause()
+            queue.queue_status(track)
+        elif choice == 2:
+            queue.play_next()
+            queue.queue_status(track)
+        elif choice == 3:
+            previous = queue.play_previous()
+            if not previous:
+                queue.queue_status(track)
+        elif choice == 4:
+            pass
+        elif choice == 5:
+            pass
+        elif choice == 6:
+            break
     
     
 
