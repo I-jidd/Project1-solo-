@@ -95,7 +95,7 @@ def play_musiclibrary():
             if not previous:
                 queue.queue_status(track)
         elif choice == 4:
-            pass
+            queue.shuffle_queue()
         elif choice == 5:
             pass
         elif choice == 6:

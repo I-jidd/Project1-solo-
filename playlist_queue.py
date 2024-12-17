@@ -1,6 +1,6 @@
 #circular queue so that it can be repeated
 import json
-import random
+import random as random
 
 class Circular_queue:
     def __init__(self, size):    
@@ -34,9 +34,13 @@ class Circular_queue:
     # def enable_repeat(self):
     #     return 'No' if self.is_repeat else 'Yes'
     
-    # def enable_shuffle(self):
-    #     return 'No' if self.is_shuffle else 'Yes'
-        
+    def enable_shuffle(self):
+        if self.shuffle:
+            self.shuffle = False
+        else:
+            self.shuffle = True
+        return self.shuffle
+    
     def enable_pause(self):
         if self.pause:
             self.pause = False
@@ -95,7 +99,14 @@ class Circular_queue:
         else:
             print("\nThere's no available tracks.")
             return False
-        
+    
+    def shuffle_queue(self):
+        queue = self.queue
+        shuffle_queue = random.shuffle(queue)
+        self.enable_shuffle()
+        print('Queue has been shuffled.')
+        return shuffle_queue
+
 # with open('musicLibrary.json', 'r') as file:
 #     music_library = json.load(file)
 
@@ -104,4 +115,4 @@ class Circular_queue:
 # q = Circular_queue(len(TRACKS))
 # for track in TRACKS:
 #     q.enqueue(track)
-    
+# q.shuffle_queue()
