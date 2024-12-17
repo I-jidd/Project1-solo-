@@ -14,7 +14,8 @@ class Circular_queue:
         self.repeat = False
         self.shuffle = False
         self.pause = False
-    
+        self.queue_copy = self.queue # this is the copy of the entire queue for repeat option
+        
     def is_empty(self):
         return self.front == -1
     
@@ -29,10 +30,39 @@ class Circular_queue:
     
     def is_pause(self):
         return '(Paused)' if self.pause else ''
-        # return '(Paused)' if self.shuffle else ''
     
-    # def enable_repeat(self):
-    #     return 'No' if self.is_repeat else 'Yes'
+    def is_repeat(self):
+        return 'Yes' if self.repeat else ' No'
+        
+    def repeat_play(self):
+        current_track = self.queue[self.front]
+        self.front = (self.front + 1) % self.size
+        self.rear = (self.rear + 1) % self.size
+        return current_track
+    
+    def repeat_next(self):
+        self.front = (self.front + 1) % self.size
+        self.rear = (self.rear + 1) % self.size
+        return self.queue_copy[self.front]
+    
+    def repeat_previous(self):
+        self.front = (self.front - 1) % self.size
+        self.rear = (self.rear - 1) % self.size
+        return self.queue_copy[self.front]
+    
+    def repeat_shuffle(self):
+        queue = self.queue_copy
+        shuffle_queue = random.shuffle(queue)
+        self.enable_shuffle()
+        print('Queue has been shuffled.')
+        return shuffle_queue
+    
+    def enable_repeat(self):
+        if self.repeat:
+            self.repeat = False
+        else:
+            self.repeat = True
+        return self.repeat
     
     def enable_shuffle(self):
         if self.shuffle:
@@ -73,8 +103,10 @@ class Circular_queue:
         return current_track
     
     def queue_status(self, track):
-        
-        track = self.currently_played[-1]
+        if self.repeat:
+            track = self.queue_copy[self.front]
+        else:
+            track = self.currently_played[-1]
         title = track['title']
         artist = track['artist']
         duration = track['duration']
@@ -106,6 +138,8 @@ class Circular_queue:
         self.enable_shuffle()
         print('Queue has been shuffled.')
         return shuffle_queue
+    
+    
 
 # with open('musicLibrary.json', 'r') as file:
 #     music_library = json.load(file)
@@ -115,4 +149,8 @@ class Circular_queue:
 # q = Circular_queue(len(TRACKS))
 # for track in TRACKS:
 #     q.enqueue(track)
-# q.shuffle_queue()
+# q.enable_repeat()
+# track = q.repeat_previous()
+# q.queue_status(track)
+# track = q.repeat_next()
+# q.queue_status(track)

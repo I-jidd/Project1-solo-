@@ -72,34 +72,54 @@ def play_musiclibrary():
     for track in TRACKS:
         queue.enqueue(track)
     
-    track = queue.play_queue()
-    queue.queue_status(track)
+    if not queue.repeat:
+        track = queue.play_queue()
+        queue.queue_status(track)
+    else:
+        track = queue.repeat_play()
     while True:
         if queue.is_pause():
             print('[1] Play')
-        print('[1] Pause')
+        else:
+            print('[1] Pause')
         print('[2] Next')
         print('[3] Previous')
         print('[4] Shuffle')
         print('[5] Repeat')
         print('[6] Exit')
         choice = int(input('Enter you choice: '))
-        if choice == 1:
-            queue.enable_pause()
-            queue.queue_status(track)
-        elif choice == 2:
-            queue.play_next()
-            queue.queue_status(track)
-        elif choice == 3:
-            previous = queue.play_previous()
-            if not previous:
+        if queue.repeat:
+            if choice == 1:
+                queue.enable_pause()
                 queue.queue_status(track)
-        elif choice == 4:
-            queue.shuffle_queue()
-        elif choice == 5:
-            pass
-        elif choice == 6:
-            break
+            elif choice == 2:
+                track = queue.repeat_next()
+                queue.queue_status(track)
+            elif choice == 3:
+                track = queue.repeat_previous()
+                queue.queue_status(track)
+            elif choice == 4:
+                queue.repeat_shuffle()
+            elif choice == 6:
+                break
+        else:
+            if choice == 1:
+                queue.enable_pause()
+                queue.queue_status(track)
+            elif choice == 2:
+                queue.play_next()
+                queue.queue_status(track)
+            elif choice == 3:
+                previous = queue.play_previous()
+                if not previous:
+                    queue.queue_status(track)
+            elif choice == 4:
+                queue.shuffle_queue()
+            elif choice == 5:
+                queue.enable_repeat()
+                print('\nEnabled Repeat. Queue has been reset.\n')
+            if choice == 6:
+                break
     
     
 
